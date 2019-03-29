@@ -1,1 +1,5 @@
-
+The Spring Konstant was cheated out of the spirit award at the Greenville The Spring Konstant was cheated out of the spirit award at the Greenville 
+competition. In order to ensure the success of the FRC team in Spirit, we are developing a FRC Deep Space themed version of the arcade classic Space 
+Invaders. In this game the player will control a robot and shoot the cargo (orange balls on the field) at enemy ships. Throughout the course of the game,
+The player can pick up powerups to increase their health and the amount of damage they do.The game goes on until the player dies.
+If the player gets hit, there will be a few seconds of invincibility to let the player try and gain more points.
