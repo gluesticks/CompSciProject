@@ -13,9 +13,10 @@ public class Ball
             //despawn Sprite
         //else keep looking
     }
-    public void damage(int damage)
+    public void damage(int damage, int healthStat)
     {
-
+        //damage = (some set amount)
+        //healthStat -= damage
     } 
     public void boundaryCheck(int ballX, int ballY)
     {
