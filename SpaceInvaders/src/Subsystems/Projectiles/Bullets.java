@@ -19,13 +19,15 @@ public class Bullets
             //despawn bullet
         }
     }
-    public void hitDetection()
+    public boolean hitDetection(boolean hit)
     {
-
+        return hit;
     }
     public void damage(int damage, int healthStat)
     {
-
+        //if hitDetection returns true
+            //healthStat -= 5
+        
     }
     public boolean boundaryCheck(int bulletX, int bulletY, int screenX, int screenY, boolean inBounds)
     {
@@ -35,10 +37,11 @@ public class Bullets
             //set inBounds = false
             return inBounds;
     }
-    public void bulletFire()
+    public boolean bulletFire(boolean bulletFire)
     {
         //at some random point in time the enemy will fire a bullet
         //if (set amount of time) passes
             //wait set random interval of time to fire bullet
+        return bulletFire;
     }
 }
