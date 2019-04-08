@@ -1,11 +1,19 @@
 package Subsystems.Projectiles;
-
+import java.awt.Rectangle;
+import java.awt.geom.*;
 public class Bullets
 {
     public int getBulletPos()
     {
         //call class to get sprite pos
         return bulletPos;
+    }
+    public Rectangle(int x, int y, int width, int height)
+    {
+        //x = <get shipXPos>
+        //y = <get shipYPos>
+        width = 10;
+        height = 15;
     }
     public void move(int x, int y, int screenX, int screenY)
     {

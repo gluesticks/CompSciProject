@@ -1,6 +1,7 @@
 package Subsystems.Sprites;
 import java.awt.Rectangle;
 import java.awt.geom.*;
+import SpaceInvaders.src.subsystems.sprites.Ship.png;
 public class Robot
 {
     public int health(int health)
