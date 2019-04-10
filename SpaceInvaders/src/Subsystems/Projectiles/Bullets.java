@@ -1,14 +1,36 @@
 package Subsystems.Projectiles;
 import java.awt.Rectangle;
 import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.*;
 public class Bullets
 {
-    public int getBulletPos()
+    Graphics2D d;
+    BufferedImage img;
+    public loadBulletImage()
     {
-        //call class to get sprite pos
-        return bulletPos;
+        String imagePath = "/SpaceInvaders/src/Subsystems/Sprites/Ball.png";
+        try {
+            img = ImageIO.read(new File(imagePath));
+        } catch(IOException e) {    
+        }
     }
-    public Rectangle(int x, int y, int width, int height)
+    public makeBulletSprite(BufferedImage img, Graphics2D g, int x, int y)
+    {
+        d.drawImage(img, null, x, y); //get shipX and shipY
+    }
+    public int getBulletX(int x)
+    {2
+        return x;
+    }
+    public int getBulletY(int y)
+    {
+        return y;
+    }
+    public Rectangle(int x, int y, int width, int height) //creates the hitbox around the bullet
     {
         //x = <get shipXPos>
         //y = <get shipYPos>

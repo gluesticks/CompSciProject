@@ -13,7 +13,8 @@ public class Asteroids
     }
     public boolean boundaryCheck(int x, int y, boolean inBounds)
     {
-        //int screenX = <insert screen width>
+        //screenX = <insert screen width>
+        //screenY = <insert scrren height>
         return inBounds;
     }
 }
