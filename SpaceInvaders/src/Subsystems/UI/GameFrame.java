@@ -18,7 +18,7 @@ public class GameFrame extends JPanel implements KeyListener
 	
 	int dead, listlength;
 	
-	GalagaPanel()
+	GameFrame()
 	{
 		//load images, data, whatever
 		shippic = new ImageIcon("Sprites/Ship.PNG");
