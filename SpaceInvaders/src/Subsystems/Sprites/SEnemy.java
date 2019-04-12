@@ -10,7 +10,7 @@ public class SEnemy extends GameObject
 	
 	Bullet bullet;
 	
-	Alien()
+	SEnemy()
 	{
 		dice = new Random();
 		x = dice.nextInt(400);
