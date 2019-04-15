@@ -5,7 +5,7 @@ public class Update extends Thread
 
 	GameFrame panel;
 
-	UpdateThread(GameFrame p)
+	public Update(GameFrame p)
 	{
 		panel = p;
 	}

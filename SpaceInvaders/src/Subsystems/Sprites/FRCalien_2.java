@@ -1,13 +1,44 @@
 public class FRCalien_2 extends SEnemy
 {
-
-	double t;
-
+	
+	int y_target = dice.nextInt(250-y) + y;
+	int cnty = 1;
+	
 	public void update()
 	{
-		x = 100+ (int) (100 * Math.sin(t));
-		y = 100+ (int) (100 *Math.cos(t));
-		t += .2;
+		if(cnt%2 != 1)
+		{
+			x += dx;
+			if(x > 500)
+				cnt++;
+		}
+		else
+		{
+			x -= dx;
+			if(x < 0)
+				cnt++;
+		}	
+		
+		if(cnty%2 != 1)
+		{
+			y += dx;
+			if(y > y_target)
+			{
+				y_target = dice.nextInt(y);
+				cnty++;
+			}
+		}
+		else
+		{
+			y -= dx;
+			if(y < y_target)
+			{
+				y_target = dice.nextInt(250-y) + y;
+				cnty++;
+			}
+		}
+		
+		rand = dice.nextInt(2);
 		
 		if(alive)
 		{
@@ -32,6 +63,11 @@ public class FRCalien_2 extends SEnemy
 		{
 			bullet.y = -15;
 		}
+	}
+
+	public void setPrey(Ship ship) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

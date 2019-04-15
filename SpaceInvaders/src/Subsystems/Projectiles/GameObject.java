@@ -1,4 +1,4 @@
-
+package Subsystems.Projectiles;
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,10 +6,10 @@ public class GameObject extends Rectangle
 {
 
 	ImageIcon picture;
-	boolean alive;
-	String attribute = "nothing";
+	public boolean alive;
+	public String attribute = "nothing";
 	
-	GameObject()
+	public GameObject()
 	{
 		x= 200;
 		y = 200;
@@ -28,7 +28,9 @@ public class GameObject extends Rectangle
 		if(alive)
 		{
 			if( picture != null )
+			{
 				g.drawImage(picture.getImage(),x,y,width,height,c);
+			}
 			else
 			{
 				g.setColor(Color.BLUE);

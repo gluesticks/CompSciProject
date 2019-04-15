@@ -1,3 +1,4 @@
+package Subsystems.Projectiles;
 import java.awt.*;
 import javax.swing.*;
 
@@ -5,7 +6,7 @@ import javax.swing.*;
 public class Bullet extends GameObject
 {
 	Color col;
-	Bullet()
+	public Bullet()
 	{
 		width = 10;
 		height = 10;

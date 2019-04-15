@@ -1,10 +1,12 @@
+import Subsystems.Projectiles.GameObject;
+
 public class Ship extends GameObject
 {
 
 	//ship velocity
 	int dx;
 	
-	Ship()
+	public Ship()
 	{
 		attribute = "ship";
 	}

@@ -1,7 +1,5 @@
-package Subsystems.Sprites;
 import java.awt.Rectangle;
 import java.awt.geom.*;
-import SpaceInvaders.src.subsystems.sprites.Ship.png;
 public class Robot
 {
     public int health(int health)
@@ -9,14 +7,14 @@ public class Robot
         health = 100;
         return health;
     }
-    public Rectangle(int x, int y, int width, int height)
+    public void Rectangle(int x, int y, int width, int height)
     {
         //x = <grab robot xPos>
         //y = <grab robot yPos>
         width = 50;
         height = 50;
     }
-    public move()
+    public void move()
     {
         
     }

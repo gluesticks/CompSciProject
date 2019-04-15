@@ -1,5 +1,8 @@
 import java.util.*;
 
+import Subsystems.Projectiles.Bullet;
+import Subsystems.Projectiles.GameObject;
+
 public class SEnemy extends GameObject
 {
 	Random dice;
@@ -10,7 +13,7 @@ public class SEnemy extends GameObject
 	
 	Bullet bullet;
 	
-	Alien()
+	public SEnemy()
 	{
 		dice = new Random();
 		x = dice.nextInt(400);

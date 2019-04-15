@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import Subsystems.Projectiles.Bullet;
+
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
@@ -7,7 +10,7 @@ public class GameFrame extends JPanel implements KeyListener
 {
 
 	//images
-	ImageIcon shippic, FRCalien, FRCalien_2;
+	ImageIcon shippic, FRCalien, FRCalien_2, FRCalien_3, FRCalien_4;
 
 	//list of all objects in game
 	LinkedList<SEnemy> masterList;
@@ -20,10 +23,12 @@ public class GameFrame extends JPanel implements KeyListener
 	
 	GameFrame()
 	{
-		//load images, data, whatever
-		shippic = new ImageIcon("Sprites/Ship.PNG");
-		FRCalien = new ImageIcon("Sprites/Enemy_Ship_1.PNG");
-		FRCalien_2 = new ImageIcon("Sprite/Enemy_Ship_2.PNG");
+		
+		shippic = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Ship.PNG");
+		FRCalien = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_1.PNG");
+		FRCalien_2 = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_2.PNG");
+		FRCalien_3 = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_3.PNG");
+		FRCalien_4 = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_4.PNG");
 
 		//add some aliens to game
 		masterList = new LinkedList<SEnemy>();
@@ -49,6 +54,14 @@ public class GameFrame extends JPanel implements KeyListener
 		p1.setPrey(ship);
 		masterList.add(p1);
 		
+		FRCalien_3 p2 = new FRCalien_3();
+		p2.setPicture(FRCalien_3);
+		masterList.add(p2);
+		
+		FRCalien_4 p3 = new FRCalien_4();
+		p3.setPicture(FRCalien_4);
+		masterList.add(p3);
+		
 		bullet = new Bullet();
 
 		Update ut = new Update(this);
@@ -64,6 +77,8 @@ public class GameFrame extends JPanel implements KeyListener
 	public void paintComponent(Graphics g)
 	{
 		//draw all objects in game
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		for( SEnemy go : masterList )
 		{
 			go.draw(g,this);
