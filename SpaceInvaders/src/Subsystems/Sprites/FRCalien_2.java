@@ -45,16 +45,16 @@ public class FRCalien_2 extends SEnemy
 			if(rand == 0 && !shot)
 			{
 				bullet.x = x + width/2;
-				bullet.y = y + 5;
+				bullet.y = y + bullet_dy;
 				shot = true;
 			}
 			
 			if(shot)
 			{
-				bullet.y += 10;
+				bullet.y += bullet_dy;
 				if(bullet.y >= 500)
 				{
-					bullet.y = -5;
+					bullet.y = -bullet_dy;
 					shot = false;
 				}
 			}

@@ -10,7 +10,7 @@ public class GameFrame extends JPanel implements KeyListener
 {
 
 	//images
-	ImageIcon shippic, FRCalien, FRCalien_2, FRCalien_3, FRCalien_4;
+	ImageIcon shippic, FRCalien, FRCalien_2, FRCalien_3, FRCalien_4, ballpic;
 
 	//list of all objects in game
 	LinkedList<SEnemy> masterList;
@@ -29,6 +29,7 @@ public class GameFrame extends JPanel implements KeyListener
 		FRCalien_2 = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_2.PNG");
 		FRCalien_3 = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_3.PNG");
 		FRCalien_4 = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_4.PNG");
+		ballpic = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Ball.PNG");
 
 		//add some aliens to game
 		masterList = new LinkedList<SEnemy>();
@@ -63,6 +64,7 @@ public class GameFrame extends JPanel implements KeyListener
 		masterList.add(p3);
 		
 		bullet = new Bullet();
+		bullet.setPicture(ballpic);
 
 		Update ut = new Update(this);
 		ut.start();
@@ -92,12 +94,16 @@ public class GameFrame extends JPanel implements KeyListener
 		if(ship.alive == false)
 		{
 			g.setFont(new Font("sansserif", Font.BOLD, 32));
+			g.setColor(Color.RED);
 			g.drawString("GAME OVER!!!!", 150, 300);
+			g.setColor(Color.BLACK);
 		}
 		if(dead == listlength)
 		{
 			g.setFont(new Font("sansserif", Font.BOLD, 32));
+			g.setColor(Color.RED);
 			g.drawString("GAME WON!!!!", 150, 300);
+			g.setColor(Color.BLACK);
 		}
 		else
 		{

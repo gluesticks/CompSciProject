@@ -1,4 +1,5 @@
 package Subsystems.Projectiles;
+import Subsystems.Projectiles.GameObject;
 import java.awt.*;
 import javax.swing.*;
 
@@ -15,7 +16,7 @@ public class Bullet extends GameObject
 		y = 0;
 		
 		attribute = "bullet";
-		col = Color.RED;
+		//col = Color.RED;
 	}
 	
 	public void update()
@@ -29,7 +30,8 @@ public class Bullet extends GameObject
 	}
 	public void draw(Graphics g, Component c)
 	{
-		g.setColor(col);
-		g.fillOval(x, y, width, height);
+		g.drawImage(picture.getImage(),x,y,width,height,c);
+	//	g.setColor(col);
+	//	g.fillOval(x, y, width, height);
 	}
 }

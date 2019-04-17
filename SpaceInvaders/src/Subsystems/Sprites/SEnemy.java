@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.ImageIcon;
+
 import Subsystems.Projectiles.Bullet;
 import Subsystems.Projectiles.GameObject;
 
@@ -8,8 +10,10 @@ public class SEnemy extends GameObject
 	Random dice;
 	int cnt = 1;
 	int dx;
+	int bullet_dy = 3;
 	int rand = 0;
 	boolean shot;
+	ImageIcon ballpic;
 	
 	Bullet bullet;
 	
@@ -18,9 +22,11 @@ public class SEnemy extends GameObject
 		dice = new Random();
 		x = dice.nextInt(400);
 		y = dice.nextInt(250);
-		dx = dice.nextInt(20) + 10;
+		dx = dice.nextInt(6) + 4;
 		attribute = "alien";
+		ballpic = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Ball.PNG");
 		bullet = new Bullet();
+		bullet.setPicture(ballpic);
 		bullet.y = -10;
 		shot = false;
 		
@@ -48,16 +54,16 @@ public class SEnemy extends GameObject
 			if(rand == 0 && !shot)
 			{
 				bullet.x = x + width/2;
-				bullet.y = y + 5;
+				bullet.y = y + bullet_dy;
 				shot = true;
 			}
 			
 			if(shot)
 			{
-				bullet.y += 10;
+				bullet.y += bullet_dy;
 				if(bullet.y >= 500)
 				{
-					bullet.y = -5;
+					bullet.y = -bullet_dy;
 					shot = false;
 				}
 			}
