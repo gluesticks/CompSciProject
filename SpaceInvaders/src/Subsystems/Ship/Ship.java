@@ -18,22 +18,25 @@ import java.io.*;
 
 public class Ship extends JPanel implements KeyListener
 {
-	private static final Graphics Graphics = null;
+	Graphics Graphics = null;
 	BufferedImage shipImage = null;
-	boolean isDead;
+	boolean isDead = false;
 	int lives;
 	int yLoc = 550;
 	int xLoc = 225;
 	Graphics2D shipGraphics = null;
-	KeyEvent keyboard = null;
+	boolean hit = false;
 	
-	Object[] upgrades = {new Arm(), new Intake(), new Elevator(), new Drivetrain()};
+	Arm armUpgrade = new Arm();
+	Intake intakeUpgrade = new Intake();
+	Elevator elevatorUpgrade = new Elevator();
+	Drivetrain drivetrainUpgrade = new Drivetrain();
+	Hybrid hybridUpgrade = new Hybrid();
 	
 	public Ship()
 	{
 		try
 		{
-			
 			shipImage = ImageIO.read(new File("SpaceInvaders/src/Subsystems/Sprites/Ship.png"));
 		}
 		catch (Exception e)
@@ -50,17 +53,16 @@ public class Ship extends JPanel implements KeyListener
 		shipGraphics.drawImage(shipImage, xLoc, yLoc, null);
 	}
 	
-	private void health()
-	{
-		//detects and shows the health and lives 
-	}
-	
 	private void movement(KeyEvent e)
 	{
 		int location = e.getKeyLocation();
 		if (location == KeyEvent.KEY_LOCATION_LEFT)//if user presses left arrow key
 		{
 				xLoc -= 5;
+				if (xLoc < 0)
+				{
+					xLoc = 0;
+				}
 				setImage(shipGraphics);
 		}
 		else if(location == KeyEvent.KEY_LOCATION_RIGHT)//if user presses right arrow key
@@ -87,35 +89,77 @@ public class Ship extends JPanel implements KeyListener
 	
 	private void checkUpgrades()
 	{
+		if (hybridUpgrade.collected == true)
+		{
+			
+			//do something with hybrid to create and be able to detect
+		}
 		//checks what upgrades the Ship currently has
 	}
 	
-	private void hitDetection()
+	private void hitDetection(boolean isHit)
 	{
-		//checks if the Ship object has been hit
+		//
 		
-		//then looks to see if death happens
+		if (hit == true)
+		{
+			lives--;
+			hit = false;
+		}
+		else
+		{
+			
+			return;
+		}
 	}
-
+	
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent arg0)
+	{
+		if (arg0 == null)
+		{
+			return;
+		}
+		else
+		{
+			movement(arg0);
+		}
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e)
+	{
 		
 	}
 	
-	public void actionPerformed(ActionEvent e)
+	private void update()
 	{
+		//keyPressed(KeyEvent arg0)
+	}
+	
+	private void reset()
+	{
+		isDead = false;
+		//lives;
+		yLoc = 550;
+		xLoc = 225;
+		hit = false;
+	}
+	
+	public static void main(String[] args)
+	{
+		new Ship();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
