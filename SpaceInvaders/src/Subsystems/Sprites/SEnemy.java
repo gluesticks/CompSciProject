@@ -1,26 +1,30 @@
 import java.util.*;
 
+import javax.swing.ImageIcon;
+
+import Subsystems.Projectiles.Bullet;
+import Subsystems.Projectiles.Bullets;
+import Subsystems.Projectiles.GameObject;
+
 public class SEnemy extends GameObject
 {
+	ImageIcon picture = new ImageIcon("SpaceInvaders/src/Subsystems/Sprites/Enemy_Ship_1.PNG");
 	Random dice;
 	int cnt = 1;
 	int dx;
 	int rand = 0;
+	int points = 500;
 	boolean shot;
 	
-	Bullet bullet;
-	
-	SEnemy()
+	public SEnemy()
 	{
 		dice = new Random();
 		x = dice.nextInt(400);
 		y = dice.nextInt(250);
-		dx = dice.nextInt(20) + 10;
+		dx = dice.nextInt(6) + 4;
 		attribute = "alien";
-		bullet = new Bullet();
-		bullet.y = -10;
 		shot = false;
-		
+		setPicture(picture);
 	}
 
 	public void update()
@@ -38,31 +42,25 @@ public class SEnemy extends GameObject
 				cnt++;
 		}	
 		
-		rand = dice.nextInt(2);
+		fire_update();
+	}
+	
+	protected void fire_update()
+	{
+		rand = dice.nextInt(25);
 		
 		if(alive)
 		{
 			if(rand == 0 && !shot)
 			{
-				bullet.x = x + width/2;
-				bullet.y = y + 5;
+				Bullets.addBullet(x + width/2, y + 10, 10, "alien_bullet");
 				shot = true;
 			}
 			
 			if(shot)
 			{
-				bullet.y += 10;
-				if(bullet.y >= 500)
-				{
-					bullet.y = -5;
-					shot = false;
-				}
+				shot = false;
 			}
 		}
-		else
-		{
-			bullet.y = -15;
-		}
-		
 	}
 }

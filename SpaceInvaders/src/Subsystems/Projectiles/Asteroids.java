@@ -4,8 +4,8 @@ public class Asteroids
 {
     public void move(int x, int y)
     {
-        x += Math.rand();
-        y += Math.rand();
+        x += Math.rint(10);
+        y += Math.rint(10);
     }
     public boolean hitDetection(boolean hit)
     {

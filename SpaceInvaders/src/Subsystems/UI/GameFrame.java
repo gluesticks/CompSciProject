@@ -1,55 +1,40 @@
 import javax.swing.*;
+import Subsystems.Projectiles.*;
+import Subsystems.Ship.Ship;
+import Subsystems.Projectiles.Bullets;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
 
-public class GameFrame extends JPanel implements KeyListener
+public class GameFrame extends JPanel implements KeyListener, MouseListener
 {
 
-	//images
-	ImageIcon shippic, FRCalien, FRCalien_2;
-
 	//list of all objects in game
-	LinkedList<SEnemy> masterList;
+	static LinkedList<SEnemy> masterList;
 
 	//ship
 	Ship ship;
-	Bullet bullet;
 	
-	int dead, listlength;
+	//buttons
+	Button next_level_button = new Button("Next Level", 0, 208, 250);
+	Button quit_button = new Button("Quit", 38, 208, 250);
 	
-	GalagaPanel()
+	//some variables to keep track of game
+	int dead, listlength, score = 0, level = 1, max_level = 5;	
+	boolean nextLevelPrompted = false, quitPrompted = false;
+
+	GameFrame()
 	{
-		//load images, data, whatever
-		shippic = new ImageIcon("Sprites/Ship.PNG");
-		FRCalien = new ImageIcon("Sprites/Enemy_Ship_1.PNG");
-		FRCalien_2 = new ImageIcon("Sprite/Enemy_Ship_2.PNG");
 
 		//add some aliens to game
 		masterList = new LinkedList<SEnemy>();
-		for(int i=0; i<3; i++)
-		{
-			SEnemy a = new SEnemy();
-			a.setPicture(FRCalien);
-			masterList.add(a);
-		}
 		
-		FRCalien ca = new FRCalien();
-		ca.setPicture(FRCalien);
-		masterList.add(ca);
+		//add aliens for level 1
+		Level.level_1();
 				
 		//add a ship to the game
 		ship = new Ship();
-		ship.setPicture(shippic);
-		ship.x = 200;
-		ship.y = 400;
-	
-		FRCalien_2 p1 = new FRCalien_2();
-		p1.setPicture(FRCalien_2);
-		p1.setPrey(ship);
-		masterList.add(p1);
-		
-		bullet = new Bullet();
 
 		Update ut = new Update(this);
 		ut.start();
@@ -57,6 +42,7 @@ public class GameFrame extends JPanel implements KeyListener
 		
 		//stupid key listener stuff
 		addKeyListener(this);
+		addMouseListener(this);
 		setFocusable(true);
 	}
 
@@ -64,25 +50,67 @@ public class GameFrame extends JPanel implements KeyListener
 	public void paintComponent(Graphics g)
 	{
 		//draw all objects in game
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		for( SEnemy go : masterList )
 		{
 			go.draw(g,this);
 			listlength++;
-			go.bullet.draw(g, this);
 			if(!go.alive)
 				dead++;
 		}
 		ship.draw(g, this);
-		bullet.draw(g, this);
+		Bullets.drawBullets(g, this);
+		next_level_button.draw(g, this);
+		quit_button.draw(g, this);
+		RobotShop.draw(g, this);
+
+		g.setFont(new Font("sansserif", Font.BOLD, 32));
+		g.setColor(Color.RED);
+		g.drawString("Lives: " + ship.lives, 10, 30);
+		g.setColor(Color.BLACK);	
+		
+		g.setFont(new Font("sansserif", Font.BOLD, 32));
+		g.setColor(Color.RED);
+		g.drawString("Level: " + level, 450, 30);
+		g.setColor(Color.BLACK);
+		
+		g.setFont(new Font("sansserif", Font.BOLD, 22));
+		g.setColor(Color.WHITE);
+		g.drawString("Score: " + score, 220, 30);
+		g.setColor(Color.BLACK);
+		
 		if(ship.alive == false)
 		{
+			quit_button.show();
 			g.setFont(new Font("sansserif", Font.BOLD, 32));
+			g.setColor(Color.RED);
 			g.drawString("GAME OVER!!!!", 150, 300);
+			g.setColor(Color.BLACK);
+			if(quitPrompted)					
+				System.exit(0);
 		}
 		if(dead == listlength)
 		{
-			g.setFont(new Font("sansserif", Font.BOLD, 32));
-			g.drawString("GAME WON!!!!", 150, 300);
+			Bullets.delAllBullets();
+			if(level==max_level) {
+				quit_button.show();
+				g.setFont(new Font("sansserif", Font.BOLD, 32));
+				g.setColor(Color.RED);
+				g.drawString("GAME WON!!!!", 150, 300);
+				g.setColor(Color.BLACK);		
+				if(quitPrompted)					
+					System.exit(0);
+			} else if(level < max_level) {
+				next_level_button.show();
+				if(nextLevelPrompted) {
+					RobotShop.close();
+					Level.next_level(level);
+					level += 1;
+					next_level_button.hide();
+					nextLevelPrompted = false;
+				}
+			}
 		}
 		else
 		{
@@ -98,54 +126,75 @@ public class GameFrame extends JPanel implements KeyListener
 		for( SEnemy go : masterList )
 		{
 			go.update();
-			if(bullet.intersects(go))
+			
+			if(Bullets.checkBulletIntersection(go, "ship_bullet"))
 			{
 				go.kill();
+				score += go.points;
 			}
-			
 			if(go.intersects(ship) && !go.attribute.equalsIgnoreCase("ship"))
 			{
-				ship.kill();
+				ship.damage();
+				if(ship.lives==0) {
+					ship.kill();
+				}
 				System.out.println(go.attribute + " killed you");
 			}
-			if(go.bullet.intersects(ship))
+			if(Bullets.checkBulletIntersection(ship, "alien_bullet"))
 			{
-				ship.kill();
+				ship.damage();
+				if(ship.lives==0) {
+					ship.kill();
+				}
 				System.out.println("Shot by " + go.attribute);
 			}
 			
 		}
 		
-		//check for bullet shot aliens
-		
-		bullet.update();
+		Bullets.update();
 		ship.update();
 		
 		repaint();
 	}
-
+	
+	
 	public void keyPressed(KeyEvent k)
 	{
-		char c = k.getKeyChar();
-		
-		if( k.getKeyCode() == KeyEvent.VK_RIGHT )
-			ship.dx = 5;
-		if( k.getKeyCode() == KeyEvent.VK_LEFT )
-			ship.dx = -5;
-		if(c == ' ')
-		{
-			bullet.x = ship.x;
-			bullet.y = ship.y - 30;
-		}
+		ship.movement(k);
 	}
 
 	public void keyReleased(KeyEvent k)
 	{
-		if( k.getKeyCode() == KeyEvent.VK_LEFT ||  k.getKeyCode() == KeyEvent.VK_RIGHT )
-			ship.dx = 0;
+		if( k.getKeyCode() == KeyEvent.VK_LEFT ||  k.getKeyCode() == KeyEvent.VK_RIGHT || k.getKeyCode() == KeyEvent.VK_UP || k.getKeyCode() == KeyEvent.VK_DOWN)
+			ship.dx = 0; ship.dy = 0;
+		if( k.getKeyChar() == ' ')
+			ship.setDefaultPic();
 	}
 
 	public void keyTyped(KeyEvent k)
+	{
+	}
+
+	public void mouseClicked(MouseEvent e) 
+	{
+		RobotShop.onMousePress(this.getMousePosition());
+		nextLevelPrompted = next_level_button.isPressed(this.getMousePosition());
+		quitPrompted = quit_button.isPressed(this.getMousePosition());
+	}
+
+	public void mouseEntered(MouseEvent e) 
+	{	
+	}
+
+	public void mouseExited(MouseEvent e) 
+	{	
+	}
+
+	public void mousePressed(MouseEvent e) 
+	{	
+	}
+
+	public void mouseReleased(MouseEvent e) 
 	{
 	}
 
